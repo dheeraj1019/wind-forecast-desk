@@ -5,12 +5,12 @@ import {
 import { num, shortDay, slotOf, dateTime } from "./format.js";
 
 export const COLORS = {
-  forecast: "#0F6E8C",
-  actual: "#1B2A33",
-  band: "#BFD9E3",
-  warn: "#A63D2F",
-  grid: "#DCE3E8",
-  axis: "#5C6B75",
+  forecast: "#0A6CFF",
+  actual: "#0B1B2B",
+  band: "#8FB8FF",
+  warn: "#E5352B",
+  grid: "rgba(11, 27, 43, 0.12)",
+  axis: "#42586B",
 };
 
 const axisProps = { stroke: COLORS.axis, tick: { fontSize: 12, fill: COLORS.axis }, tickLine: false };

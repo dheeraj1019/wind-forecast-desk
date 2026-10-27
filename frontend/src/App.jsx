@@ -14,8 +14,22 @@ function Stat({ label, value, note }) {
   );
 }
 
+/* iOS-style activity indicator: 12 bars that fade around the wheel */
+function Spinner({ label = "Loading" }) {
+  return (
+    <div className="loader" role="status" aria-live="polite">
+      <span className="spinner" aria-hidden="true">
+        {Array.from({ length: 12 }, (_, i) => (
+          <i key={i} style={{ transform: `rotate(${i * 30}deg)`, animationDelay: `${-(1 - i / 12)}s` }} />
+        ))}
+      </span>
+      <span className="loader-text">{label}...</span>
+    </div>
+  );
+}
+
 function Status({ state, children }) {
-  if (state.loading) return <p className="status">Loading data...</p>;
+  if (state.loading) return <Spinner label="Loading forecast" />;
   if (state.error) return <p className="status error">{state.error.message}</p>;
   return children;
 }
@@ -187,7 +201,12 @@ export default function App() {
   const [cutoffKey, setCutoffKey] = useState(null);
   const [date, setDate] = useState(null);
 
-  if (meta.loading) return <p className="status page">Loading...</p>;
+  if (meta.loading)
+    return (
+      <div className="page-loader">
+        <Spinner label="Loading Wind Forecast Desk" />
+      </div>
+    );
   if (meta.error)
     return (
       <div className="page">
@@ -221,7 +240,7 @@ export default function App() {
 
         <div className="controls">
           <label>
-            Decision cutoff (UK time)
+            Cutoff (UK time)
             <select value={clock(cutoff)} onChange={(e) => setCutoffKey(e.target.value)}>
               {choices.map((c) => (
                 <option key={clock(c)} value={clock(c)}>
